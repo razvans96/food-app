@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:food_app/home_page.dart';
 import 'package:provider/provider.dart';
-import 'package:food_app/controllers/search_product_controller.dart';
-import 'package:food_app/services/food_api_service.dart';
+import 'package:food_app/controllers/product_search_controller.dart';
+import 'package:food_app/services/product_search_service.dart';
 
 void main() {
-  testWidgets('Debería mostrar un buscador y una lista de resultados', (WidgetTester tester) async {
+  testWidgets('Debería mostrar un buscador y una lista de resultados',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       ChangeNotifierProvider(
-        create: (_) => SearchProductController( 
-          foodApiService: FoodApiService(), // Proporciona el servicio
+        create: (_) => ProductSearchController(
+          productSearchService: ProductSearchService(), // Proporciona el servicio
         ),
         child: const MaterialApp(
           home: MyHomePage(title: 'Buscador de alimentos'),

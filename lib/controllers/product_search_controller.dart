@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/services/food_api_service.dart';
 import 'package:food_app/models/simple_product.dart'; 
+import 'package:food_app/services/product_search_service.dart';
 
 class SearchProductController extends ChangeNotifier {
   final TextEditingController searchController = TextEditingController();
-  final FoodApiService foodApiService;
+  final ProductSearchService productSearchService; // Servicio para buscar productos
   List<SimpleProduct> searchResults = [];
   bool isLoading = false;
 
   // Constructor que recibe el servicio como parámetro
-  SearchProductController({required this.foodApiService});
+  SearchProductController({required this.productSearchService});
 
   // Método para realizar la búsqueda
   Future<void> searchProducts(String query) async {
@@ -19,7 +19,7 @@ class SearchProductController extends ChangeNotifier {
     notifyListeners(); // Notifica a los listeners que el estado ha cambiado.
 
     try {
-      searchResults = await foodApiService.searchProducts(query); // Llama al servicio
+      searchResults = await productSearchService.searchProducts(query); // Llama al servicio
     } catch (e) {
       searchResults = [];
       debugPrint('Error al buscar productos: $e');
