@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:food_app/models/simple_product.dart'; 
 import 'package:food_app/services/product_search_service.dart';
 
-class SearchProductController extends ChangeNotifier {
+class ProductSearchController extends ChangeNotifier {
   final TextEditingController searchController = TextEditingController();
   final ProductSearchService productSearchService; // Servicio para buscar productos
   List<SimpleProduct> searchResults = [];
   bool isLoading = false;
 
   // Constructor que recibe el servicio como parámetro
-  SearchProductController({required this.productSearchService});
+  ProductSearchController({required this.productSearchService});
 
   // Método para realizar la búsqueda
   Future<void> searchProducts(String query) async {

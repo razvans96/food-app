@@ -10,7 +10,7 @@ class ProductQueryService {
   ProductQueryService();
 
   Future<SimpleProduct> getProduct(String barcode) async {
-    final response = await http.get(Uri.parse('$baseUrl/products/$barcode'));
+    final response = await http.get(Uri.parse('$baseUrl/product/$barcode'));
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);

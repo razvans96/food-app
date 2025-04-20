@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/pages/product_query_page.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:food_app/home_page.dart';
+import 'package:food_app/pages/home_page.dart';
 
 
-Future<void> main() async {
-  await dotenv.load(fileName: ".env");
+
+Future main() async {
+  await dotenv.load(fileName: './dotenv');
   runApp(const MyApp());
 }
 
@@ -17,10 +19,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
           useMaterial3: true,
         ),
-        home: const MyHomePage(title: 'Buscador de alimentos'),
+        home: const ProductQueryPage(),
     );
   }
 }
