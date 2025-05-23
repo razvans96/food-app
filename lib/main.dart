@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/pages/product_query_page.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:food_app/pages/home_page.dart';
 
 
 
