@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/models/simple_product.dart';
+import 'package:food_app/models/product_food.dart';
+import 'package:food_app/widgets/product_details.dart';
 
 class UIService {
-  static Future<void> showProductDialog(BuildContext context, SimpleProduct product) {
+  static Future<void> showProductDialog(BuildContext context, ProductFood product) {
     return showDialog(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text(product.name ?? 'Producto desconocido'),
-        content: Text(product.brands ?? 'Marca desconocida'),
+        contentPadding: EdgeInsets.zero,
+        content: ProductDetails(product: product),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext),
@@ -21,6 +22,15 @@ class UIService {
   static void showErrorSnackBar(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(message)),
+    );
+  }
+
+  static Future<void> showProductBottomSheet(BuildContext context, ProductFood product) {
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      builder: (_) => ProductDetails(product: product),
     );
   }
 }

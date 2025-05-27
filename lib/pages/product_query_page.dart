@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 import 'package:food_app/services/product_query_service.dart';
 import 'package:food_app/services/ui_service.dart';
+import 'package:food_app/widgets/barcode_scanner_stream_button.dart';
 
 class ProductQueryPage extends StatefulWidget {
   const ProductQueryPage({super.key});
@@ -11,32 +11,26 @@ class ProductQueryPage extends StatefulWidget {
 }
 
 class _ProductQueryPageState extends State<ProductQueryPage> {
-  Future<void> _handleBarcodeScan() async {
-    String? res = await SimpleBarcodeScanner.scanBarcode(
-      context,
-      barcodeAppBar: const BarcodeAppBar(
-        appBarTitle: 'Test',
-        centerTitle: false,
-        enableBackButton: true,
-        backButtonIcon: Icon(Icons.arrow_back_ios),
-      ),
-      isShowFlashIcon: true,
-      delayMillis: 2000,
-      cameraFace: CameraFace.back,
-    );
+  bool _bottomSheetOpen = false;
 
+  Future<void> _onBarcodeStream(String barcode) async {
     if (!mounted) return;
-    
-    if (res != null && res.isNotEmpty) {
+    if (barcode.isNotEmpty) {
+      if (_bottomSheetOpen) {
+        Navigator.of(context).pop();
+        await Future.delayed(const Duration(milliseconds: 200));
+      }
       try {
-        final product = await ProductQueryService().getProduct(res);
+        final product = await ProductQueryService().getProduct(barcode);
         if (!mounted) return;
-        
-        await UIService.showProductDialog(context, product);
+        _bottomSheetOpen = true;
+        await UIService.showProductBottomSheet(context, product);
       } catch (e) {
         if (!mounted) return;
         UIService.showErrorSnackBar(context, 'Error al obtener el producto: $e');
         debugPrint('Error: $e');
+      } finally {
+        _bottomSheetOpen = false;
       }
     }
   }
@@ -62,10 +56,8 @@ class _ProductQueryPageState extends State<ProductQueryPage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _handleBarcodeScan,
-        icon: const Icon(Icons.qr_code_scanner),
-        label: const Text('Escanear'),
+      floatingActionButton: BarcodeScannerStreamButton(
+        onBarcode: _onBarcodeStream,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );

@@ -17,8 +17,8 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => ProductSearchController(
-        productSearchService: ProductSearchService(), // Proporciona el servicio
-      ), // Proporciona el controlador a la vista.
+        productSearchService: ProductSearchService(),
+      ),
       child: Scaffold(
         appBar: const CustomAppBar(title: 'Buscador de productos'),
         body: Padding(
