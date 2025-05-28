@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/widgets/welcome_view.dart';
+import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 import 'package:food_app/services/product_query_service.dart';
-import 'package:food_app/services/ui_service.dart';
-import 'package:food_app/widgets/barcode_scanner_stream_button.dart';
+import 'package:food_app/models/product_food.dart';
+import 'package:food_app/widgets/product_details.dart';
 
 class ProductQueryPage extends StatefulWidget {
   const ProductQueryPage({super.key});
@@ -11,55 +13,71 @@ class ProductQueryPage extends StatefulWidget {
 }
 
 class _ProductQueryPageState extends State<ProductQueryPage> {
-  bool _bottomSheetOpen = false;
+  String? result;
+  BarcodeViewController? controller;
+  ProductFood? product;
+  bool isLoading = false;
+  String? errorMsg;
 
-  Future<void> _onBarcodeStream(String barcode) async {
-    if (!mounted) return;
-    if (barcode.isNotEmpty) {
-      if (_bottomSheetOpen) {
-        Navigator.of(context).pop();
-        await Future.delayed(const Duration(milliseconds: 200));
-      }
-      try {
-        final product = await ProductQueryService().getProduct(barcode);
-        if (!mounted) return;
-        _bottomSheetOpen = true;
-        await UIService.showProductBottomSheet(context, product);
-      } catch (e) {
-        if (!mounted) return;
-        UIService.showErrorSnackBar(context, 'Error al obtener el producto: $e');
-        debugPrint('Error: $e');
-      } finally {
-        _bottomSheetOpen = false;
-      }
+  Future<void> _fetchProduct(String code) async {
+    setState(() {
+      isLoading = true;
+      errorMsg = null;
+    });
+    try {
+      final fetchedProduct = await ProductQueryService().getProduct(code);
+      setState(() {
+        product = fetchedProduct as ProductFood?;
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        errorMsg = 'Error al obtener el producto: $e';
+        isLoading = false;
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Text(
-              'Bienvenido a Alimentos',
-              style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
+      body: Column(
+        children: [
+          Expanded(
+            flex: 1,
+            child: Center(
+              child: SizedBox(
+                child: SimpleBarcodeScanner(
+                  scaleHeight: 400,
+                  scaleWidth: 600,
+                  onScanned: (code) {
+                    if (code.isNotEmpty && code != result) {
+                      setState(() {
+                        result = code;
+                      });
+                      _fetchProduct(code);
+                    }
+                  },
+                  continuous: true,
+                  onBarcodeViewCreated: (BarcodeViewController c) {
+                    controller = c;
+                  },
+                ),
+              ),
             ),
-            SizedBox(height: 16),
-            Text(
-              'Escanea tu producto',
-              style: TextStyle(fontSize: 24),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
+          ),
+          Expanded(
+            flex: 1,
+            child: isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : errorMsg != null
+                    ? Center(child: Text(errorMsg!, style: const TextStyle(color: Colors.red)))
+                    : product != null
+                        ? ProductDetails(product: product!)
+                        : const WelcomeView(),
+          ),
+        ],
       ),
-      floatingActionButton: BarcodeScannerStreamButton(
-        onBarcode: _onBarcodeStream,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
