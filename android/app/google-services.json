@@ -12,7 +12,20 @@
           "package_name": "com.example.food_app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "799503316133-pv17i050pisa1pu3s9ofdrfn2bsv57s3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.food_app",
+            "certificate_hash": "c57701aa0374d5cbd56d9e936b20f862762eaa52"
+          }
+        },
+        {
+          "client_id": "799503316133-ilfntdj9h30vrpsjtr6h3g20lm9b5afc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCWvH_TCdTsuMiLW7yP0vd9L7WClo7f68s"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "799503316133-ilfntdj9h30vrpsjtr6h3g20lm9b5afc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

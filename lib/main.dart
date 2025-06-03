@@ -3,8 +3,11 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:food_app/firebase_options.dart';
 import 'package:food_app/pages/login_page.dart';
+import 'package:food_app/pages/register_page.dart';
+import 'package:food_app/pages/product_search_page.dart';
 import 'package:food_app/controllers/login_controller.dart';
 import 'package:provider/provider.dart';
+import 'package:food_app/pages/product_query_page.dart';
 
 
 
@@ -32,7 +35,14 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
           useMaterial3: true,
         ),
-        home: LoginPage(),
+        initialRoute: '/login',
+        routes: {
+          '/login': (context) => LoginPage(),
+          '/register': (context) => RegisterPage(),
+          '/query': (context) => ProductQueryPage(),
+          '/search': (context) => ProductSearchPage(title: 'Buscador de productos'),
+          
+        },    
     );
   }
 }

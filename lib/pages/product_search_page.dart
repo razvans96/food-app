@@ -8,8 +8,8 @@ import 'package:food_app/widgets/no_results_message.dart';
 import 'package:food_app/widgets/product_list.dart';
 import 'package:food_app/widgets/custom_app_bar.dart';
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key, required this.title});
+class ProductSearchPage extends StatelessWidget {
+  const ProductSearchPage({super.key, required this.title});
 
   final String title;
 

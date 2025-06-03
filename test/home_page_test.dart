@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:food_app/pages/home_page.dart';
+import 'package:food_app/pages/product_search_page.dart';
 import 'package:provider/provider.dart';
 import 'package:food_app/controllers/product_search_controller.dart';
 import 'package:food_app/services/product_search_service.dart';
@@ -14,7 +14,7 @@ void main() {
           productSearchService: ProductSearchService(), // Proporciona el servicio
         ),
         child: const MaterialApp(
-          home: MyHomePage(title: 'Buscador de alimentos'),
+          home: ProductSearchPage(title: 'Buscador de alimentos'),
         ),
       ),
     );
