@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:food_app/controllers/login_controller.dart';
+import 'package:food_app/controllers/user_controller.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class UserLoginPage extends StatefulWidget {
+  const UserLoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<UserLoginPage> createState() => _UserLoginPageState();
 }
 
-
-class _LoginPageState extends State<LoginPage> {
+class _UserLoginPageState extends State<UserLoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   String? _validateEmail(String value) {
     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
@@ -33,18 +33,18 @@ class _LoginPageState extends State<LoginPage> {
     }
     return null;
   }
+
   @override
   Widget build(BuildContext context) {
-    final controller = context.watch<LoginController>();
+    final controller = context.watch<UserController>();
     final isLogin = controller.isLogin;
-    final formKey = GlobalKey<FormState>();
 
     return Scaffold(
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: Form(
-            key: formKey,
+            key: _formKey,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -74,8 +74,8 @@ class _LoginPageState extends State<LoginPage> {
                 else
                   ElevatedButton(
                     onPressed: () async {
-                      if (formKey.currentState?.validate() ?? false) {
-                        final isNewUser = await controller.submit(
+                      if (_formKey.currentState?.validate() ?? false) {
+                        final isNewUser = await controller.signInWithEmailAndPassword(
                           _emailController.text.trim(),
                           _passwordController.text.trim(),
                         );
@@ -89,12 +89,12 @@ class _LoginPageState extends State<LoginPage> {
                         }
                       }
                     },
-                    child: Text(controller.isLogin ? 'Iniciar sesión' : 'Registrarse'),
+                    child: Text(isLogin ? 'Iniciar sesión' : 'Registrarse'),
                   ),
                 const SizedBox(height: 12),
                 TextButton(
                   onPressed: controller.toggleFormType,
-                  child: Text(controller.isLogin
+                  child: Text(isLogin
                       ? '¿No tienes cuenta? Regístrate'
                       : '¿Ya tienes cuenta? Inicia sesión'),
                 ),
@@ -103,13 +103,13 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () async {
                     final isNewUser = await controller.signInWithGoogle();
                     if (!mounted) return;
-                    if (isNewUser == true){
+                    if (isNewUser == true) {
                       // ignore: use_build_context_synchronously
                       Navigator.of(context).pushReplacementNamed('/register');
                     } else if (isNewUser == false) {
                       // ignore: use_build_context_synchronously
-                      Navigator.of(context).pushReplacementNamed('/home');
-                    } 
+                      Navigator.of(context).pushReplacementNamed('/query');
+                    }
                   },
                   icon: const FaIcon(FontAwesomeIcons.google, color: Colors.red),
                   label: const Text('Iniciar sesión con Google'),
@@ -118,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
         ),
-      )
+      ),
     );
   }
 }

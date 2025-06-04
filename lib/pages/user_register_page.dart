@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:food_app/controllers/register_controller.dart';
+import 'package:food_app/controllers/user_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+class UserRegisterPage extends StatefulWidget {
+  const UserRegisterPage({super.key});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<UserRegisterPage> createState() => _UserRegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
-
+class _UserRegisterPageState extends State<UserRegisterPage> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _surnameController = TextEditingController();
@@ -57,7 +55,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = context.watch<RegisterController>();
+    final userController = context.watch<UserController>();
 
     return Scaffold(
       appBar: AppBar(title: const Text('Completa tu perfil')),
@@ -104,20 +102,24 @@ class _RegisterPageState extends State<RegisterPage> {
                 validator: (v) => _validateDob(v ?? ''),
               ),
               const SizedBox(height: 24),
-              if (controller.error != null)
-                Text(controller.error!, style: const TextStyle(color: Colors.red)),
-              if (controller.isLoading)
+              if (userController.error != null)
+                Text(userController.error!, style: const TextStyle(color: Colors.red)),
+              if (userController.isLoading)
                 const Center(child: CircularProgressIndicator())
               else
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState?.validate() ?? false) {
-                      controller.submit(
-                        name: _nameController.text.trim(),
-                        surname: _surnameController.text.trim(),
-                        phone: _phoneController.text.trim(),
-                        dob: _dobController.text.trim(),
+                      userController.registerProfile(
+                        userName: _nameController.text.trim(),
+                        userSurname: _surnameController.text.trim(),
+                        userPhone: _phoneController.text.trim(),
+                        userDob: _dobController.text.trim(),
                       );
+                      if (!mounted) return;
+                      if (userController.error == null) {
+                        //Navigator.of(context).pushReplacementNamed('/query');
+                      }
                     }
                   },
                   child: const Text('Registrar'),
