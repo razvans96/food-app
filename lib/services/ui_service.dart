@@ -3,7 +3,8 @@ import 'package:food_app/models/product_food.dart';
 import 'package:food_app/widgets/product_details.dart';
 
 class UIService {
-  static Future<void> showProductDialog(BuildContext context, ProductFood product) {
+  static Future<void> showProductDialog(
+      BuildContext context, ProductFood product) {
     return showDialog(
       context: context,
       builder: (dialogContext) => AlertDialog(
@@ -25,7 +26,8 @@ class UIService {
     );
   }
 
-  static Future<void> showProductBottomSheet(BuildContext context, ProductFood product) {
+  static Future<void> showProductBottomSheet(
+      BuildContext context, ProductFood product) {
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,

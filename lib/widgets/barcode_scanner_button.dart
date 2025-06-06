@@ -2,23 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 
 class BarcodeScannerButton extends StatelessWidget {
+
+  const BarcodeScannerButton({
+    required this.onScanned,
+    super.key,
+    this.label = 'Escanear',
+    this.icon = Icons.qr_code_scanner,
+    this.delayMillis = 2000,
+    this.cameraFace = CameraFace.back,
+  });
+  
   final void Function(String? barcode) onScanned;
   final String label;
   final IconData icon;
   final int delayMillis;
   final CameraFace cameraFace;
 
-  const BarcodeScannerButton({
-    super.key,
-    required this.onScanned,
-    this.label = 'Escanear',
-    this.icon = Icons.qr_code_scanner,
-    this.delayMillis = 2000,
-    this.cameraFace = CameraFace.back,
-  });
-
   Future<void> _scanBarcode(BuildContext context) async {
-    String? res = await SimpleBarcodeScanner.scanBarcode(
+    final res = await SimpleBarcodeScanner.scanBarcode(
       context,
       barcodeAppBar: const BarcodeAppBar(
         appBarTitle: 'Escaner',

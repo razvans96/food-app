@@ -1,21 +1,23 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:food_app/controllers/user_controller.dart';
 import 'package:food_app/firebase_options.dart';
+import 'package:food_app/pages/product_query_page.dart';
+import 'package:food_app/pages/product_search_page.dart';
 import 'package:food_app/pages/user_login_page.dart';
 import 'package:food_app/pages/user_register_page.dart';
-import 'package:food_app/pages/product_search_page.dart';
-import 'package:food_app/controllers/user_controller.dart';
 import 'package:provider/provider.dart';
-import 'package:food_app/pages/product_query_page.dart';
 
-
-
-Future main() async {
+Future<void> main() async {
   await dotenv.load(fileName: './dotenv');
-    await Firebase.initializeApp(
+  await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  final userController = UserController();
+  await userController.checkUserValidity();
+  
   runApp(
     ChangeNotifierProvider(
       create: (_) => UserController(),
@@ -30,21 +32,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
-          useMaterial3: true,
-        ),
-        initialRoute: '/login',
-        routes: {
-          '/login': (context) => UserLoginPage(),
-          '/register': (context) => UserRegisterPage(),
-          '/query': (context) => ProductQueryPage(),
-          '/search': (context) => ProductSearchPage(title: 'Buscador de productos'),
-          
-        },    
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+        useMaterial3: true,
+      ),
+      initialRoute: '/query',
+      routes: {
+        '/login': (context) => const UserLoginPage(),
+        '/register': (context) => const UserRegisterPage(),
+        '/query': (context) => const ProductQueryPage(),
+        '/search': (context) =>
+            const ProductSearchPage(title: 'Buscador de productos'),
+      },
     );
   }
 }
-
-

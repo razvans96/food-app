@@ -1,7 +1,8 @@
-import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 import 'package:food_app/config/config.dart';
 import 'package:food_app/models/user.dart';
-import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class UserRegisterService {
   final String baseUrl = AppConfig.apiBaseUrl;
@@ -17,14 +18,14 @@ class UserRegisterService {
     );
 
     if (response.statusCode != 200) {
-      String errorMsg = 'Failed to register user';
+      var errorMsg = 'Failed to register user';
       try {
-        final Map<String, dynamic> body = jsonDecode(response.body);
+        final body = jsonDecode(response.body) as Map<String, dynamic>;
         if (body.containsKey('error')) {
           errorMsg = body['error'].toString();
         }
-      } catch (_) {
-        
+      } on Exception catch (e) {
+        errorMsg = 'Error parsing error message: $e';
       }
       throw Exception(errorMsg);
     }

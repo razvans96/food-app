@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:food_app/controllers/user_controller.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:food_app/controllers/user_controller.dart';
+import 'package:provider/provider.dart';
 
 class UserLoginPage extends StatefulWidget {
   const UserLoginPage({super.key});
@@ -25,7 +25,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
   String? _validatePassword(String value, bool isLogin) {
     if (value.isEmpty) return 'La contraseña es obligatoria';
     if (!isLogin) {
-      final hasLetter = value.contains(RegExp(r'[A-Za-z]'));
+      final hasLetter = value.contains(RegExp('[A-Za-z]'));
       final hasNumber = value.contains(RegExp(r'\d'));
       if (!hasLetter || !hasNumber) {
         return 'Debe contener letras y números';
@@ -68,24 +68,29 @@ class _UserLoginPageState extends State<UserLoginPage> {
                 ),
                 const SizedBox(height: 20),
                 if (controller.error != null)
-                  Text(controller.error!, style: const TextStyle(color: Colors.red)),
+                  Text(controller.error!,
+                      style: const TextStyle(color: Colors.red)),
                 if (controller.isLoading)
                   const CircularProgressIndicator()
                 else
                   ElevatedButton(
                     onPressed: () async {
                       if (_formKey.currentState?.validate() ?? false) {
-                        final isNewUser = await controller.signInWithEmailAndPassword(
+                        final isNewUser =
+                            await controller.signInWithEmailAndPassword(
                           _emailController.text.trim(),
                           _passwordController.text.trim(),
                         );
                         if (!mounted) return;
-                        if (isNewUser == true) {
+                        if ((isNewUser ?? false) == true) {
+                          // Already checked if mounted
                           // ignore: use_build_context_synchronously
-                          Navigator.of(context).pushReplacementNamed('/register');
+                          await Navigator.of(context)
+                              .pushReplacementNamed('/register');
                         } else if (isNewUser == false) {
+                          // Already checked if mounted
                           // ignore: use_build_context_synchronously
-                          Navigator.of(context).pushReplacementNamed('/home');
+                          await Navigator.of(context).pushReplacementNamed('/home');
                         }
                       }
                     },
@@ -103,15 +108,18 @@ class _UserLoginPageState extends State<UserLoginPage> {
                   onPressed: () async {
                     final isNewUser = await controller.signInWithGoogle();
                     if (!mounted) return;
-                    if (isNewUser == true) {
+                    if ((isNewUser ?? false) == true) {
+                      // Already checked if mounted
                       // ignore: use_build_context_synchronously
-                      Navigator.of(context).pushReplacementNamed('/register');
+                      await Navigator.of(context).pushReplacementNamed('/register');
                     } else if (isNewUser == false) {
+                      // Already checked if mounted
                       // ignore: use_build_context_synchronously
-                      Navigator.of(context).pushReplacementNamed('/query');
+                      await Navigator.of(context).pushReplacementNamed('/query');
                     }
                   },
-                  icon: const FaIcon(FontAwesomeIcons.google, color: Colors.red),
+                  icon:
+                      const FaIcon(FontAwesomeIcons.google, color: Colors.red),
                   label: const Text('Iniciar sesión con Google'),
                 ),
               ],

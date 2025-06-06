@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:food_app/models/product_food.dart';
 
 class ProductDetails extends StatelessWidget {
-  final ProductFood product;
 
-  const ProductDetails({super.key, required this.product});
+  const ProductDetails({required this.product, super.key});
+  
+  final ProductFood product;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(24.0),
+      padding: const EdgeInsets.all(24),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,7 +34,8 @@ class ProductDetails extends StatelessWidget {
                   height: 120,
                   width: 120,
                   color: Colors.grey[300],
-                  child: const Icon(Icons.image_not_supported, size: 48, color: Colors.grey),
+                  child: const Icon(Icons.image_not_supported,
+                      size: 48, color: Colors.grey),
                 ),
               const SizedBox(width: 24),
               Expanded(
@@ -43,7 +45,9 @@ class ProductDetails extends StatelessWidget {
                   children: [
                     Text('Marca: ${product.brand ?? 'Desconocida'}'),
                     Text('Cantidad: ${product.quantity ?? 'Desconocida'}'),
-                    Text('NutriScore: ${product.nutriscoreGrade ?? 'Desconocido'}'),
+                    Text(
+                        'NutriScore: ${product.nutriscoreGrade 
+                        ?? 'Desconocido'}'),
                     Text('Ecoscore: ${product.ecoscoreGrade ?? 'Desconocido'}'),
                     Text('Nova: ${product.novaGroup ?? 'Desconocido'}'),
                   ],

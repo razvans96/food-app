@@ -3,7 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:food_app/widgets/search_product_bar.dart';
 
 void main() {
-  testWidgets('Debería mostrar un campo de texto y un botón de búsqueda', (WidgetTester tester) async {
+  testWidgets('Debería mostrar un campo de texto y un botón de búsqueda',
+      (WidgetTester tester) async {
     final controller = TextEditingController();
     bool searchTriggered = false;
 

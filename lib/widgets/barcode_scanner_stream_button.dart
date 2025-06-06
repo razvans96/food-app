@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 
 class BarcodeScannerStreamButton extends StatelessWidget {
-  final void Function(String barcode) onBarcode;
-  final String label;
-  final IconData icon;
-  final int delayMillis;
-  final CameraFace cameraFace;
 
   const BarcodeScannerStreamButton({
     super.key,
@@ -16,6 +11,13 @@ class BarcodeScannerStreamButton extends StatelessWidget {
     this.delayMillis = 2000,
     this.cameraFace = CameraFace.back,
   });
+
+
+  final void Function(String barcode) onBarcode;
+  final String label;
+  final IconData icon;
+  final int delayMillis;
+  final CameraFace cameraFace;
 
   void _startStream(BuildContext context) {
     SimpleBarcodeScanner.streamBarcode(

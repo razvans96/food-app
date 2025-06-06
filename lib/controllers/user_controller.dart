@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:food_app/services/user_register_service.dart';
+import 'package:flutter/material.dart';
 import 'package:food_app/models/user.dart';
+import 'package:food_app/services/user_register_service.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class UserController extends ChangeNotifier {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -17,8 +17,8 @@ class UserController extends ChangeNotifier {
     notifyListeners();
   }
 
-
-  Future<bool?> signInWithEmailAndPassword(String email, String password) async {
+  Future<bool?> signInWithEmailAndPassword(
+      String email, String password) async {
     isLoading = true;
     error = null;
     notifyListeners();
@@ -51,7 +51,7 @@ class UserController extends ChangeNotifier {
     try {
       // Forzamos la aparición del selector de cuenta de Google
       final googleSignIn = GoogleSignIn();
-      await googleSignIn.signOut(); 
+      await googleSignIn.signOut();
 
       final googleUser = await googleSignIn.signIn();
       // Si el usuario cancela
@@ -62,9 +62,10 @@ class UserController extends ChangeNotifier {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-      final userCredential = await _firebaseAuth.signInWithCredential(credential);
+      final userCredential =
+          await _firebaseAuth.signInWithCredential(credential);
       return userCredential.additionalUserInfo?.isNewUser;
-    } catch (e) {
+    } on Exception catch (e) {
       error = e.toString();
       return null;
     } finally {
@@ -103,10 +104,10 @@ class UserController extends ChangeNotifier {
         userDob: userDob,
       );
       await UserRegisterService().registerUser(appUser);
-      
-
-    } catch (e) {
-      error = 'No se pudo registrar el usuario. Intenta de nuevo. ${e.toString()}';
+    } on Exception catch (e) {
+      error = 'No se pudo registrar el usuario. '
+          'Intenta de nuevo. '
+          '$e';
     } finally {
       isLoading = false;
       notifyListeners();
@@ -122,4 +123,18 @@ class UserController extends ChangeNotifier {
 
   /// Obtener el usuario actual de Firebase
   User? get currentUser => _firebaseAuth.currentUser;
+
+  Future<void> checkUserValidity() async {
+    final user = _firebaseAuth.currentUser;
+    if (user != null) {
+      try {
+        await user.reload();
+        if (_firebaseAuth.currentUser == null) {
+          await _firebaseAuth.signOut();
+        }
+      } on Exception catch (_) {
+        await _firebaseAuth.signOut();
+      }
+    }
+  }
 }

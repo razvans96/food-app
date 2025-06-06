@@ -11,7 +11,8 @@ void main() {
     await tester.pumpWidget(
       ChangeNotifierProvider(
         create: (_) => ProductSearchController(
-          productSearchService: ProductSearchService(), // Proporciona el servicio
+          productSearchService:
+              ProductSearchService(), // Proporciona el servicio
         ),
         child: const MaterialApp(
           home: ProductSearchPage(title: 'Buscador de alimentos'),

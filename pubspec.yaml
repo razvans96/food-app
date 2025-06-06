@@ -27,13 +27,14 @@ dependencies:
   font_awesome_flutter: ^10.8.0
 
 dev_dependencies:
+  flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
-  
-  flutter_lints: ^5.0.0
+    
   json_serializable: ^6.9.4
   mockito: ^5.4.5
   import_sorter: ^4.6.0
+  very_good_analysis: ^8.0.0
 
 
 flutter:

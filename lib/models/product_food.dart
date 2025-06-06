@@ -4,13 +4,9 @@ part 'product_food.g.dart';
 
 @JsonSerializable()
 class ProductFood {
-  final String? name;
-  final String? brand;
-  final String? quantity;
-  final String? nutriscoreGrade;
-  final String? ecoscoreGrade;
-  final String? imageUrl;
-  final int? novaGroup;
+
+
+
 
   ProductFood({
     this.name,
@@ -22,7 +18,16 @@ class ProductFood {
     this.novaGroup,
   });
 
-  factory ProductFood.fromJson(Map<String, dynamic> json) => _$ProductFoodFromJson(json);
+  factory ProductFood.fromJson(Map<String, dynamic> json) =>
+      _$ProductFoodFromJson(json);
+
+  final String? name;
+  final String? brand;
+  final String? quantity;
+  final String? nutriscoreGrade;
+  final String? ecoscoreGrade;
+  final String? imageUrl;
+  final int? novaGroup;
 
   Map<String, dynamic> toJson() => _$ProductFoodToJson(this);
 }

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:food_app/models/simple_product.dart';
 
 class ProductList extends StatelessWidget {
-  final List<SimpleProduct> products;
 
-  const ProductList({super.key, required this.products});
+  const ProductList({required this.products, super.key});
+  
+  final List<SimpleProduct> products;
 
   @override
   Widget build(BuildContext context) {

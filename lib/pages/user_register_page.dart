@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:food_app/controllers/user_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:food_app/controllers/user_controller.dart';
+import 'package:provider/provider.dart';
 
 class UserRegisterPage extends StatefulWidget {
   const UserRegisterPage({super.key});
@@ -29,22 +29,24 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
 
   String? _validateName(String value) {
     if (value.isEmpty) return 'Campo obligatorio';
-    final nameRegex = RegExp(r"^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$");
+    final nameRegex = RegExp(r'^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$');
     if (!nameRegex.hasMatch(value)) return 'Solo letras y espacios';
     return null;
   }
 
   String? _validateSurname(String value) {
     if (value.isEmpty) return 'Campo obligatorio';
-    final surnameRegex = RegExp(r"^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$");
+    final surnameRegex = RegExp(r'^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$');
     if (!surnameRegex.hasMatch(value)) return 'Solo letras y espacios';
     return null;
   }
 
   String? _validatePhone(String value) {
     if (value.isEmpty) return 'Campo obligatorio';
-    final phoneRegex = RegExp(r"^\+\d{1,3}\s?\d{6,14}$");
-    if (!phoneRegex.hasMatch(value)) return 'Introduce un teléfono válido con prefijo (+34...)';
+    final phoneRegex = RegExp(r'^\+\d{1,3}\s?\d{6,14}$');
+    if (!phoneRegex.hasMatch(value)) {
+      return 'Introduce un teléfono válido con prefijo (+34...)';
+    }
     return null;
   }
 
@@ -86,24 +88,27 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
               const SizedBox(height: 12),
               TextFormField(
                 controller: _dobController,
-                decoration: const InputDecoration(labelText: 'Fecha de nacimiento'),
+                decoration:
+                    const InputDecoration(labelText: 'Fecha de nacimiento'),
                 readOnly: true,
                 onTap: () async {
                   final picked = await showDatePicker(
                     context: context,
-                    initialDate: DateTime(2000, 1, 1),
+                    initialDate: DateTime.now(),
                     firstDate: DateTime(1900),
                     lastDate: DateTime.now(),
                   );
                   if (picked != null) {
-                    _dobController.text = "${picked.day}/${picked.month}/${picked.year}";
+                    _dobController.text =
+                        '${picked.day}/${picked.month}/${picked.year}';
                   }
                 },
                 validator: (v) => _validateDob(v ?? ''),
               ),
               const SizedBox(height: 24),
               if (userController.error != null)
-                Text(userController.error!, style: const TextStyle(color: Colors.red)),
+                Text(userController.error!,
+                    style: const TextStyle(color: Colors.red)),
               if (userController.isLoading)
                 const Center(child: CircularProgressIndicator())
               else
@@ -118,7 +123,12 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
                       );
                       if (!mounted) return;
                       if (userController.error == null) {
-                        //Navigator.of(context).pushReplacementNamed('/query');
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Perfil registrado correctamente'),
+                          ),
+                        );
+                        Navigator.of(context).pushReplacementNamed('/query');
                       }
                     }
                   },

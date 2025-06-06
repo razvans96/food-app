@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:food_app/controllers/product_search_controller.dart';
-import 'package:food_app/widgets/search_product_bar.dart';
 import 'package:food_app/services/product_search_service.dart';
+import 'package:food_app/widgets/custom_app_bar.dart';
 import 'package:food_app/widgets/loading_indicator.dart';
 import 'package:food_app/widgets/no_results_message.dart';
 import 'package:food_app/widgets/product_list.dart';
-import 'package:food_app/widgets/custom_app_bar.dart';
+import 'package:food_app/widgets/search_product_bar.dart';
+import 'package:provider/provider.dart';
 
 class ProductSearchPage extends StatelessWidget {
-  const ProductSearchPage({super.key, required this.title});
+  const ProductSearchPage({required this.title, super.key});
 
   final String title;
 
@@ -22,7 +22,7 @@ class ProductSearchPage extends StatelessWidget {
       child: Scaffold(
         appBar: const CustomAppBar(title: 'Buscador de productos'),
         body: Padding(
-          padding: const EdgeInsets.all(32.0),
+          padding: const EdgeInsets.all(32),
           child: Column(
             children: [
               Consumer<ProductSearchController>(
