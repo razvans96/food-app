@@ -51,8 +51,9 @@ class _ProductQueryPageState extends State<ProductQueryPage> {
                 child: SimpleBarcodeScanner(
                   scaleHeight: 400,
                   scaleWidth: 600,
+                  delayMillis: 500,
                   onScanned: (code) {
-                    if (code.isNotEmpty && code != result) {
+                    if (code.isNotEmpty) {
                       setState(() {
                         result = code;
                       });
