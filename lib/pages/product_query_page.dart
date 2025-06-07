@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/controllers/user_controller.dart';
 import 'package:food_app/models/product_food.dart';
 import 'package:food_app/services/product_query_service.dart';
+import 'package:food_app/widgets/custom_app_bar.dart';
 import 'package:food_app/widgets/product_details.dart';
 import 'package:food_app/widgets/welcome_view.dart';
-import 'package:provider/provider.dart';
 import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 
 class ProductQueryPage extends StatefulWidget {
@@ -42,38 +41,8 @@ class _ProductQueryPageState extends State<ProductQueryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final userController = context.watch<UserController>();
-    final isLoggedIn = userController.currentUser != null;
-    print('Usuario actual: ${userController.currentUser}');
     return Scaffold(
-      appBar: AppBar(
-        leading: isLoggedIn
-            ? IconButton(
-                icon: const Icon(Icons.menu),
-                onPressed: () {
-                  // Opciones del menú
-                  Scaffold.of(context).openDrawer();
-                },
-              )
-            : null,
-        title: const Text('Consulta de productos'),
-        actions: [
-          if (isLoggedIn)
-            IconButton(
-              icon: const Icon(Icons.person),
-              onPressed: () {
-                // Opciones del usuario
-              },
-            )
-          else
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed('/login');
-              },
-              child: const Text('Acceso'),
-            ),
-        ],
-      ),
+      appBar: const CustomAppBar(title: 'Escáner'),
       body: Column(
         children: [
           Expanded(

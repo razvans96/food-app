@@ -43,9 +43,9 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
 
   String? _validatePhone(String value) {
     if (value.isEmpty) return 'Campo obligatorio';
-    final phoneRegex = RegExp(r'^\+\d{1,3}\s?\d{6,14}$');
+    final phoneRegex = RegExp(r'^[6-9]\d{8}$');
     if (!phoneRegex.hasMatch(value)) {
-      return 'Introduce un teléfono válido con prefijo (+34...)';
+      return 'Introduce un teléfono válido';
     }
     return null;
   }
@@ -60,11 +60,14 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
     final userController = context.watch<UserController>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Completa tu perfil')),
+      appBar: AppBar(
+        title: const Text('Completa tu perfil'),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(24),
         child: Form(
           key: _formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           child: ListView(
             children: [
               TextFormField(
@@ -79,11 +82,32 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
                 validator: (v) => _validateSurname(v ?? ''),
               ),
               const SizedBox(height: 12),
-              TextFormField(
-                controller: _phoneController,
-                decoration: const InputDecoration(labelText: 'Teléfono'),
-                keyboardType: TextInputType.phone,
-                validator: (v) => _validatePhone(v ?? ''),
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Theme.of(context).dividerColor,
+                        ),
+                      ),
+                    ),
+                    child: const Text(
+                      '+34',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: TextFormField(
+                      controller: _phoneController,
+                      decoration: const InputDecoration(labelText: 'Teléfono'),
+                      keyboardType: TextInputType.phone,
+                      validator: (v) => _validatePhone(v ?? ''),
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 12),
               TextFormField(
@@ -94,7 +118,7 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
                 onTap: () async {
                   final picked = await showDatePicker(
                     context: context,
-                    initialDate: DateTime.now(),
+                    initialDate: DateTime(2000),
                     firstDate: DateTime(1900),
                     lastDate: DateTime.now(),
                   );

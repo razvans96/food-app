@@ -1,2 +1,0 @@
-C:/Users/usuario/Documents/Workspaces/flutter/food_app/android/app/.cxx/Debug/6a305l2m/x86/CMakeFiles/edit_cache.dir
-C:/Users/usuario/Documents/Workspaces/flutter/food_app/android/app/.cxx/Debug/6a305l2m/x86/CMakeFiles/rebuild_cache.dir

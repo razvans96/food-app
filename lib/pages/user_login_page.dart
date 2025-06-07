@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:food_app/controllers/user_controller.dart';
 import 'package:provider/provider.dart';
 
+
 class UserLoginPage extends StatefulWidget {
   const UserLoginPage({super.key});
 
@@ -40,8 +41,17 @@ class _UserLoginPageState extends State<UserLoginPage> {
     final isLogin = controller.isLogin;
 
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        title: const Text('Acceso'),
+      ),
       body: Center(
-        child: Padding(
+        child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
           child: Form(
             key: _formKey,

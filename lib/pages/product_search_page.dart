@@ -9,9 +9,7 @@ import 'package:food_app/widgets/search_product_bar.dart';
 import 'package:provider/provider.dart';
 
 class ProductSearchPage extends StatelessWidget {
-  const ProductSearchPage({required this.title, super.key});
-
-  final String title;
+  const ProductSearchPage({super.key});
 
   @override
   Widget build(BuildContext context) {

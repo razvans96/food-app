@@ -7,6 +7,7 @@ import 'package:food_app/pages/product_query_page.dart';
 import 'package:food_app/pages/product_search_page.dart';
 import 'package:food_app/pages/user_login_page.dart';
 import 'package:food_app/pages/user_register_page.dart';
+import 'package:food_app/theme/app_theme.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
@@ -33,17 +34,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
-        useMaterial3: true,
-      ),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
       initialRoute: '/query',
       routes: {
         '/login': (context) => const UserLoginPage(),
         '/register': (context) => const UserRegisterPage(),
         '/query': (context) => const ProductQueryPage(),
         '/search': (context) =>
-            const ProductSearchPage(title: 'Buscador de productos'),
+            const ProductSearchPage(),
       },
     );
   }
