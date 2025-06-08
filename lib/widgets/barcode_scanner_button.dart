@@ -22,7 +22,7 @@ class BarcodeScannerButton extends StatelessWidget {
     final res = await SimpleBarcodeScanner.scanBarcode(
       context,
       barcodeAppBar: const BarcodeAppBar(
-        appBarTitle: 'Escaner',
+        appBarTitle: 'Escáner',
         centerTitle: false,
         enableBackButton: true,
         backButtonIcon: Icon(Icons.arrow_back),

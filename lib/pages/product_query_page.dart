@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/models/product_food.dart';
 import 'package:food_app/services/product_query_service.dart';
+import 'package:food_app/widgets/barcode_scanner_button.dart';
 import 'package:food_app/widgets/custom_app_bar.dart';
 import 'package:food_app/widgets/product_details.dart';
 import 'package:food_app/widgets/welcome_view.dart';
-import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 
 class ProductQueryPage extends StatefulWidget {
   const ProductQueryPage({super.key});
@@ -15,7 +15,6 @@ class ProductQueryPage extends StatefulWidget {
 
 class _ProductQueryPageState extends State<ProductQueryPage> {
   String? result;
-  BarcodeViewController? controller;
   ProductFood? product;
   bool isLoading = false;
   String? errorMsg;
@@ -39,48 +38,39 @@ class _ProductQueryPageState extends State<ProductQueryPage> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const CustomAppBar(title: 'Escáner'),
-      body: Column(
-        children: [
-          Expanded(
-            child: Center(
-              child: SizedBox(
-                child: SimpleBarcodeScanner(
-                  scaleHeight: 400,
-                  scaleWidth: 600,
-                  delayMillis: 500,
-                  onScanned: (code) {
-                    if (code.isNotEmpty) {
-                      setState(() {
-                        result = code;
-                      });
-                      _fetchProduct(code);
-                    }
-                  },
-                  continuous: true,
-                  onBarcodeViewCreated: (BarcodeViewController c) {
-                    controller = c;
-                  },
-                ),
-              ),
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: const CustomAppBar(title: 'Escáner'),
+    body: Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            BarcodeScannerButton(
+              onScanned: (code) async {
+                if (code!.isNotEmpty) {
+                  await _fetchProduct(code);
+                }
+              },
             ),
-          ),
-          Expanded(
-            child: isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : errorMsg != null
-                    ? Center(
-                        child: Text(errorMsg!,
-                            style: const TextStyle(color: Colors.red)))
-                    : product != null
-                        ? ProductDetails(product: product!)
-                        : const WelcomeView(),
-          ),
-        ],
+            const SizedBox(height: 24),
+            if (isLoading)
+              const CircularProgressIndicator()
+            else if (errorMsg != null)
+              Text(
+                errorMsg!,
+                style: const TextStyle(color: Colors.red),
+              )
+            else if (product != null)
+              ProductDetails(product: product!)
+            else
+              const WelcomeView(),
+          ],
+        ),
       ),
-    );
-  }
+    ),
+  );
+}
 }
