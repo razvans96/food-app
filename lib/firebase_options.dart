@@ -50,20 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCNddgagBU66z5XGFDcvgGLMHssgtz3V28',
-    appId: '1:799503316133:web:3d7d7b61e35a723607494c',
-    messagingSenderId: '799503316133',
-    projectId: 'alimentos-7c56e',
-    authDomain: 'alimentos-7c56e.firebaseapp.com',
-    storageBucket: 'alimentos-7c56e.firebasestorage.app',
-    measurementId: 'G-ECK73KTLP3',
+    apiKey: 'AIzaSyAUrIqELbMoyv_k8O33UayIvEuDVcj07_o',
+    appId: '1:217065923735:web:5135270693da2ec47ab5d2',
+    messagingSenderId: '217065923735',
+    projectId: 'alimentos-21e88',
+    authDomain: 'alimentos-21e88.firebaseapp.com',
+    storageBucket: 'alimentos-21e88.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCWvH_TCdTsuMiLW7yP0vd9L7WClo7f68s',
-    appId: '1:799503316133:android:b8188f8558e6b6e607494c',
-    messagingSenderId: '799503316133',
-    projectId: 'alimentos-7c56e',
-    storageBucket: 'alimentos-7c56e.firebasestorage.app',
+    apiKey: 'AIzaSyC13_4h_XVVyU-Bd4Pow3ztNA8Kz1f3Y3M',
+    appId: '1:217065923735:android:840361874c4669f87ab5d2',
+    messagingSenderId: '217065923735',
+    projectId: 'alimentos-21e88',
+    storageBucket: 'alimentos-21e88.firebasestorage.app',
   );
+
 }
