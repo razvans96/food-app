@@ -4,8 +4,7 @@ import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 class BarcodeScannerStreamButton extends StatelessWidget {
 
   const BarcodeScannerStreamButton({
-    super.key,
-    required this.onBarcode,
+    required this.onBarcode, super.key,
     this.label = 'Escanear en streaming',
     this.icon = Icons.qr_code_scanner,
     this.delayMillis = 2000,

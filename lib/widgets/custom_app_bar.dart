@@ -11,7 +11,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final userController = context.watch<UserController>();
     final isLoggedIn = userController.currentUser != null;
-    print('UserController: ${userController.currentUser}');
+    //print('UserController: ${userController.currentUser}');
     return AppBar(
       leading: isLoggedIn
           ? IconButton(

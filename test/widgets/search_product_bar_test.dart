@@ -6,7 +6,7 @@ void main() {
   testWidgets('Debería mostrar un campo de texto y un botón de búsqueda',
       (WidgetTester tester) async {
     final controller = TextEditingController();
-    bool searchTriggered = false;
+    var searchTriggered = false;
 
     await tester.pumpWidget(
       MaterialApp(
