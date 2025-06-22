@@ -26,8 +26,17 @@ dependencies:
   google_sign_in: ^6.3.0
   font_awesome_flutter: ^10.8.0
   firebase_app_check: ^0.3.2+6
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+  meta: ^1.16.0
+  get_it: ^8.0.3
+  injectable: ^2.5.0
+  injectable_generator: ^2.7.0
+  freezed_annotation: ^3.0.0
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.14.4
   flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
@@ -35,11 +44,16 @@ dev_dependencies:
   json_serializable: ^6.9.4
   mockito: ^5.4.5
   very_good_analysis: ^8.0.0
+  freezed: ^3.0.6
 
 
 flutter:
   assets:
-    - ./dotenv
+    - ./.env
   uses-material-design: true
 
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon/aguacate.png"
 

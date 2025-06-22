@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:food_app/widgets/search_product_bar.dart';
+import 'package:food_app/presentation/widgets/product/product_text_search_bar.dart';
 
 void main() {
   testWidgets('Debería mostrar un campo de texto y un botón de búsqueda',
@@ -11,7 +11,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
-          body: SearchProductBar(
+          body: ProductTextSearchBar(
             controller: controller,
             onSearch: () {
               searchTriggered = true;
