@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/presentation/widgets/product/product_search_bar.dart';
 
 class ProductTextSearchBar extends StatelessWidget {
 
@@ -10,21 +11,10 @@ class ProductTextSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return ProductSearchBar(
       controller: controller,
-      decoration: InputDecoration(
-        labelText: 'Buscar productos',
-        border: const OutlineInputBorder(),
-        suffixIcon: IconButton(
-          icon: const Icon(Icons.search),
-          onPressed: onSearch,
-        ),
-      ),
-      onSubmitted: (query) {
-        if (query.trim().isNotEmpty) {
-          onSearch();
-        }
-      },
+      onSearch: onSearch,
+      labelText: 'Introduce el término de búsqueda',
     );
   }
 }

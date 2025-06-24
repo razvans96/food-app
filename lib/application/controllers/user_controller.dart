@@ -1,22 +1,23 @@
-import 'package:food_app/domain/entities/user_auth_status.dart';
 import 'package:food_app/domain/entities/user_entity.dart';
-import 'package:food_app/domain/use_cases/check_user_auth_status_use_case.dart';
+import 'package:food_app/domain/entities/user_profile_status.dart';
+import 'package:food_app/domain/use_cases/check_user_profile_status_use_case.dart';
 import 'package:food_app/domain/use_cases/create_user_use_case.dart';
 import 'package:food_app/domain/use_cases/get_user_use_case.dart';
+import 'package:food_app/domain/value_objects/user_id.dart';
 import 'package:food_app/shared/results/operation_result.dart';
 
 class UserController {
   final CreateUserUseCase _createUserUseCase;
   final GetUserUseCase _getUserUseCase;
-  final CheckUserAuthStatusUseCase _checkUserAuthStatusUseCase;
+  final CheckUserProfileStatusUseCase _checkUserProfileStatusUseCase;
 
   const UserController({
     required CreateUserUseCase createUserUseCase,
     required GetUserUseCase getUserUseCase,
-    required CheckUserAuthStatusUseCase checkUserAuthStatusUseCase,
+    required CheckUserProfileStatusUseCase checkUserProfileStatusUseCase,
   })  : _createUserUseCase = createUserUseCase,
         _getUserUseCase = getUserUseCase,
-        _checkUserAuthStatusUseCase = checkUserAuthStatusUseCase;
+        _checkUserProfileStatusUseCase = checkUserProfileStatusUseCase;
 
   Future<Result<UserEntity>> createUser({
     required String userName,
@@ -33,15 +34,21 @@ class UserController {
   }
 
   Future<Result<UserEntity>> getCurrentUser() async {
-    return await _getUserUseCase.execute();
+    return _getUserUseCase.execute();
   }
 
   Future<Result<UserEntity>> getUserById(String uid) async {
-    return await _getUserUseCase.executeWithId(uid);
+    return _getUserUseCase.executeWithId(uid);
   }
 
-  Future<UserAuthStatus> checkAuthStatus() async {
-    return await _checkUserAuthStatusUseCase.execute();
+  Future<UserProfileStatus> checkProfileStatus({
+    required UserId userId,
+    required String firebaseToken,
+  }) async {
+    return _checkUserProfileStatusUseCase.execute(
+      userId: userId,
+      firebaseToken: firebaseToken,
+    );
   }
 
   Future<Result<UserEntity>> completeUserProfile({
@@ -67,20 +74,5 @@ class UserController {
         'No se pudo completar el perfil: ${result.error}',
       );
     }
-  }
-
-  Future<bool> isUserAuthenticated() async {
-    final status = await checkAuthStatus();
-    return status != UserAuthStatus.notAuthenticated;
-  }
-
-  Future<bool> needsProfileCompletion() async {
-    final status = await checkAuthStatus();
-    return status == UserAuthStatus.profileIncomplete;
-  }
-
-  Future<bool> isUserReady() async {
-    final status = await checkAuthStatus();
-    return status == UserAuthStatus.ready;
   }
 }

@@ -50,6 +50,11 @@ dev_dependencies:
 flutter:
   assets:
     - ./.env
+    - assets/icon/mipmap-hdpi/
+    - assets/icon/mipmap-mdpi/
+    - assets/icon/mipmap-xhdpi/
+    - assets/icon/mipmap-xxhdpi/
+    - assets/icon/mipmap-xxxhdpi/
   uses-material-design: true
 
 flutter_launcher_icons:

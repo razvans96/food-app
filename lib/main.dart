@@ -10,12 +10,13 @@ import 'package:food_app/presentation/pages/product_search_page.dart';
 import 'package:food_app/presentation/pages/user_login_page.dart';
 import 'package:food_app/presentation/pages/user_register_page.dart';
 import 'package:food_app/presentation/theme/app_theme.dart';
-import 'package:food_app/presentation/view_models/auth_view_model.dart';
+import 'package:food_app/presentation/view_models/authentication_view_model.dart';
 import 'package:food_app/shared/config/dependency_injection.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: './.env');
-  
+
   WidgetsFlutterBinding.ensureInitialized();
 
   configureDependencies();
@@ -31,50 +32,42 @@ Future<void> main() async {
     await FirebaseAppCheck.instance.setTokenAutoRefreshEnabled(true);
   }
 
-  final authViewModel = getIt<AuthViewModel>();
-  final userStatus = await authViewModel.checkUserValidity();
+  final authViewModel = getIt<AuthenticationViewModel>();
+  final initialRoute = await authViewModel.getInitialRoute();
 
   runApp(
-    MyApp(initialRoute: _determineInitialRoute(userStatus)),
+    MyApp(initialRoute: initialRoute),
   );
 }
 
-String _determineInitialRoute(String? userStatus) {
-  switch (userStatus) {
-    case 'register':
-      return '/register';
-    default:
-      return '/query';
-  }
-}
-
 class MyApp extends StatelessWidget {
-  
   const MyApp({required this.initialRoute, super.key});
-  
+
   final String initialRoute;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('es', ''),
-      ],
-      title: 'Food App',
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      initialRoute: initialRoute,
-      routes: {
-        '/login': (context) => const UserLoginPage(),
-        '/register': (context) => const UserRegisterPage(),
-        '/query': (context) => const ProductQueryPage(),
-        '/search': (context) => const ProductSearchPage(),
-      },
-    );
+    return ChangeNotifierProvider.value(
+        value: getIt<AuthenticationViewModel>(),
+        child: MaterialApp(
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('es', ''),
+          ],
+          title: 'Food App',
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          initialRoute: initialRoute,
+          routes: {
+            '/login': (context) => const UserLoginPage(),
+            '/register': (context) => const UserRegisterPage(),
+            '/query': (context) => const ProductQueryPage(),
+            '/search': (context) => const ProductSearchPage(),
+          },
+        ));
   }
 }

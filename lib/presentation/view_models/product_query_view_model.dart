@@ -4,7 +4,7 @@ import 'package:food_app/presentation/view_models/states/product_query_state.dar
 import 'package:food_app/shared/results/operation_result.dart';
 import 'package:injectable/injectable.dart';
 
-@Injectable()
+@LazySingleton()
 class ProductQueryViewModel extends ChangeNotifier {
   final GetProductByBarcodeUseCase _getProductByBarcodeUseCase;
 

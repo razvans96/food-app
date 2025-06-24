@@ -1,5 +1,5 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:food_app/domain/entities/product_entity.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'product_search_state.freezed.dart';
 
