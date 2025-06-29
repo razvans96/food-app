@@ -208,12 +208,12 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
   Future<void> _handleRegister(UserRegisterViewModel registerViewModel) async {
     if (!(_formKey.currentState?.validate() ?? false)) return;
 
-    // TODO: Más adelante enviaremos _dietaryRestrictions al ViewModel
     final success = await registerViewModel.registerProfile(
       userName: _nameController.text.trim(),
       userSurname: _surnameController.text.trim(),
       userPhone: _phoneController.text.trim(),
       userDob: _selectedDate!,
+      userDietaryRestrictions: _dietaryRestrictions,
     );
 
     if (!mounted) return;

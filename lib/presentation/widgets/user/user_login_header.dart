@@ -26,7 +26,7 @@ class UserLoginHeader extends StatelessWidget {
         _buildFeatureItem(
           context,
           Icons.health_and_safety_outlined,
-          'Gestionar restricciones alimenticias personales',
+          'Gestionar preferencias y restricciones alimentarias personales',
         ),
         _buildFeatureItem(
           context,

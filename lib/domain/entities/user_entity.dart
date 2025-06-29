@@ -7,31 +7,31 @@ class UserEntity {
   final UserId id;
   final Email email;
   final String? fullName;
-  final String? name;
-  final String? surname;
+  final String name;
+  final String surname;
+  final DateTime dateOfBirth;
   final String? phone;
-  final DateTime? dateOfBirth;
-  final bool? hasCompleteProfile;
+  final List<String>? dietaryRestrictions;
+  final int? profileCompletenessPercentage;
   final bool? isAdult;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
-
   const UserEntity({
     required this.id,
     required this.email,
+    required this.name,
+    required this.surname,
+    required this.dateOfBirth,
     this.fullName,
-    this.name,
-    this.surname,
     this.phone,
-    this.dateOfBirth,
-    this.hasCompleteProfile,
+    this.dietaryRestrictions,
+    this.profileCompletenessPercentage,
     this.isAdult,
-    this.createdAt, 
+    this.createdAt,
     this.updatedAt,
   });
 
-  
   UserEntity copyWith({
     UserId? id,
     Email? email,
@@ -40,7 +40,8 @@ class UserEntity {
     String? fullName,
     String? phone,
     DateTime? dateOfBirth,
-    bool? hasCompleteProfile,
+    List<String>? dietaryRestrictions,
+    int? profileCompletenessPercentage,
     bool? isAdult,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -52,8 +53,10 @@ class UserEntity {
       surname: surname ?? this.surname,
       fullName: fullName ?? this.fullName,
       phone: phone ?? this.phone,
+      dietaryRestrictions: dietaryRestrictions ?? this.dietaryRestrictions,
       dateOfBirth: dateOfBirth ?? this.dateOfBirth,
-      hasCompleteProfile: hasCompleteProfile ?? this.hasCompleteProfile,
+      profileCompletenessPercentage:
+          profileCompletenessPercentage ?? this.profileCompletenessPercentage,
       isAdult: isAdult ?? this.isAdult,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
@@ -63,9 +66,7 @@ class UserEntity {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is UserEntity &&
-          runtimeType == other.runtimeType &&
-          id == other.id;
+      other is UserEntity && runtimeType == other.runtimeType && id == other.id;
 
   @override
   int get hashCode => id.hashCode;

@@ -18,13 +18,19 @@ class CreateUserUseCase {
     required String userSurname,
     required DateTime dateOfBirth,
     String? userPhone,
+    List<String>? userDietaryRestrictions,
     
   }) async {
     try {
       final firebaseUser = FirebaseAuth.instance.currentUser;
       
       if (firebaseUser == null) {
-        return const Failure('Usuario no autenticado en Firebase');
+        return const Failure('Usuario no autenticado');
+      }
+
+      final firebaseToken = await firebaseUser.getIdToken();
+      if (firebaseToken == null) {
+        return const Failure('Error de conexión');
       }
 
       final userId = UserId(firebaseUser.uid);
@@ -35,11 +41,12 @@ class CreateUserUseCase {
         email: email,
         name: userName,
         surname: userSurname,
-        phone: userPhone,
         dateOfBirth: dateOfBirth,
+        phone: userPhone,
+        dietaryRestrictions: userDietaryRestrictions,
       );
       
-      return await _userRepository.createUser(newUser);
+      return await _userRepository.createUser(newUser, firebaseToken);
       
     } on DomainFailure catch (e) {
       return Failure('Datos inválidos: ${e.message}');

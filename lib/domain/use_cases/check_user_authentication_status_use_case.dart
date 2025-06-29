@@ -8,17 +8,11 @@ class CheckUserAuthenticationStatusUseCase {
   const CheckUserAuthenticationStatusUseCase();
 
   Future<UserAuthStatus> execute() async {
-    final firebaseUser = FirebaseAuth.instance.currentUser;
-
-    if (firebaseUser == null) {
-      return UserAuthStatus.notAuthenticated;
-    }
-
     try {
-      await firebaseUser.reload();
-      
-      if (FirebaseAuth.instance.currentUser == null) {
-        await FirebaseAuth.instance.signOut();
+    
+      final firebaseUser = FirebaseAuth.instance.currentUser;
+
+      if (firebaseUser == null) {
         return UserAuthStatus.notAuthenticated;
       }
 

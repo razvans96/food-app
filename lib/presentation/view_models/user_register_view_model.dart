@@ -18,6 +18,7 @@ class UserRegisterViewModel extends ChangeNotifier {
     required String userSurname,
     required DateTime userDob,
     String? userPhone,
+    List<String>? userDietaryRestrictions,
   }) async {
     _updateState(const UserRegisterState.loading());
 
@@ -27,6 +28,7 @@ class UserRegisterViewModel extends ChangeNotifier {
         userSurname: userSurname,
         dateOfBirth: userDob,
         userPhone: userPhone,
+        userDietaryRestrictions: userDietaryRestrictions
       );
 
       if (result.isFailure) {
