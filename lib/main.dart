@@ -4,7 +4,9 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:food_app/domain/entities/product_entity.dart';
 import 'package:food_app/firebase_options.dart';
+import 'package:food_app/presentation/pages/product_detail_page.dart';
 import 'package:food_app/presentation/pages/product_query_page.dart';
 import 'package:food_app/presentation/pages/product_search_page.dart';
 import 'package:food_app/presentation/pages/user_login_page.dart';
@@ -67,6 +69,11 @@ class MyApp extends StatelessWidget {
             '/register': (context) => const UserRegisterPage(),
             '/query': (context) => const ProductQueryPage(),
             '/search': (context) => const ProductSearchPage(),
+            '/product-details': (context) {
+              final product =
+                  ModalRoute.of(context)!.settings.arguments! as ProductEntity;
+              return ProductDetailPage(product: product);
+            },
           },
         ));
   }

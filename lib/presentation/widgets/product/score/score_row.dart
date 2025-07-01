@@ -17,7 +17,7 @@ class ScoreRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scoreData = ScoreHelper.getScoreData(scoreType, scoreValue);
+    final scoreData = ScoreHelper.getScoreData(context, scoreType, scoreValue);
     
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),

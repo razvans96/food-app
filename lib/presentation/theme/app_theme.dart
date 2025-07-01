@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/presentation/theme/design_constants.dart';
+import 'package:food_app/presentation/theme/theme_extensions.dart';
 
 class AppTheme {
   static ThemeData get lightTheme {
@@ -8,7 +10,14 @@ class AppTheme {
       ),
       useMaterial3: true,
     );
-    return _customizeTheme(base);
+    return _customizeTheme(base).copyWith(
+      extensions: [
+        FoodScoreColors.light,
+        AdditiveColors.light,
+        AllergenColors.light,
+        ProductCardColors.light,
+      ],
+    );
   }
 
   static ThemeData get darkTheme {
@@ -19,7 +28,14 @@ class AppTheme {
       ),
       useMaterial3: true,
     );
-    return _customizeTheme(base);
+    return _customizeTheme(base).copyWith(
+      extensions: [
+        FoodScoreColors.dark,
+        AdditiveColors.dark,
+        AllergenColors.dark,
+        ProductCardColors.dark,
+      ],
+    );
   }
 
   static ThemeData _customizeTheme(ThemeData base) {
@@ -61,6 +77,12 @@ class AppTheme {
           foregroundColor: base.colorScheme.onPrimary,
           side: BorderSide(color: base.colorScheme.primary),
           textStyle: const TextStyle(fontSize: 16),
+        ),
+      ),
+      cardTheme: CardThemeData(
+        elevation: AppDesignConstants.elevationMedium,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppDesignConstants.borderRadiusMedium),
         ),
       ),
     );

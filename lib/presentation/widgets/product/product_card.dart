@@ -168,8 +168,66 @@ class _ProductCardState extends State<ProductCard>
             scoreValue: widget.product.novaGroup?.toString(),
             interpretationText: ScoreHelper.getNovaInterpretation(widget.product.novaGroup),
           ),
+
+          const SizedBox(height: 16),
+          const Divider(height: 1),
+          const SizedBox(height: 12),
+        
+          _buildDetailsLink(context),
         ],
       ),
+    );
+  }
+  
+  Widget _buildDetailsLink(BuildContext context) {
+  return Material(
+    color: Colors.transparent,
+    child: InkWell(
+      onTap: () => _navigateToProductDetails(context),
+      borderRadius: BorderRadius.circular(8),
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Theme.of(context).primaryColor.withValues(alpha: 0.3),
+          ),
+          borderRadius: BorderRadius.circular(8),
+          gradient: LinearGradient(
+            colors: [
+              Theme.of(context).primaryColor.withValues(alpha: 0.05),
+              Theme.of(context).primaryColor.withValues(alpha: 0.1),
+            ],
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Consultar información completa',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+            Icon(
+              Icons.arrow_forward,
+              size: 18,
+              color: Theme.of(context).primaryColor,
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+  void _navigateToProductDetails(BuildContext context) {
+    Navigator.pushNamed(
+      context,
+      '/product-details',
+      arguments: widget.product,
     );
   }
 }
